@@ -1,0 +1,13 @@
+Accounts for testing
+
+Player1: 
+Seed: 'eager grow art loop sister system access know truly normal case moment'
+Account: 0x616d18096ce6e1038b5c3ded080cef8ab17b3843
+
+Player2:
+Seed: 'arrest trust sword select damage outer dignity thrive practice much chase velvet'
+Account: 0x2f33f148b5ff5f76e63460e14228a671923de628
+
+PokeCoinAddress:	"0xbA2620358C17C917F7D117004fD10E4423C6359e"
+PokeCentralAdress:	"0x14F83519a11f4F8fA7133FF55740E79Fd6dDb1de"
+pokeMarketAddress: 	"0x15b65Df565D03f8B38d861194ed7d84C45342F4A"
