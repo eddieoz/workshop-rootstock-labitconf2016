@@ -20,7 +20,7 @@ Copyright (c) 2016 Edilson Osorio Junior - OriginalMy.com
  THE SOFTWARE.
 */
 
-contract accessControlled {
+/*contract accessControlled {
     address public owner;
     address public pokeMarketAddress;
 
@@ -31,7 +31,7 @@ contract accessControlled {
     modifier onlyOwner {
         if (msg.sender != owner) throw;
         /* o caracter "_" é substituído pelo corpo da funcao onde o modifier é utilizado */
-        _
+/*        _;
     }
 
     function transferOwnership(address newOwner) onlyOwner {
@@ -42,15 +42,19 @@ contract accessControlled {
         pokeMarketAddress = marketAddress;
     }
     
-}
+}*/
 
 
-contract PokeCentral is accessControlled {
+
+
+contract PokeCentral {
 
     uint256 public totalPokemonSupply;
 
     Pokemon[] public pokemons;
     PokemonMaster[] public pokeMasters;
+    address public owner;
+    address public pokeMarketAddress;
 
     mapping (uint256 => address) public pokemonToMaster;
     mapping (address => uint256) public pokeOwnerIndex;
@@ -76,43 +80,44 @@ contract PokeCentral is accessControlled {
     string[][] public pokemonNameTypes = [["Pokemon 0", "invalid"], ["Bulbassauro", "Grass/Poison"], ["Charmander", "Fire"], ["Squirtle","Water"], ["Pikachu","Eletric"]]; // Este tipo não aceita bytes
 
     /* Gera um evento publico no blockchain e avisa os clientes que estao monitorando */
-    event Transfer(address from, address to, uint256 value);
-    event CreatePokemon(uint id, string name, uint cp, uint hp );
-    event UpdatePokemon(uint id, string name, uint cp, uint hp );
-    event UpdateMasterPokemons(address owner, uint total);
-    event Log1(uint number);
-    event Log2(string message);
+    //event Transfer(address from, address to, uint256 value);
+    //event CreatePokemon(uint id, string name, uint cp, uint hp );
+    //event UpdatePokemon(uint id, string name, uint cp, uint hp );
+    //event UpdateMasterPokemons(address owner, uint total);
+    //event Log1(uint number);
+    //event Log2(string message);
 
     /* Inicializa o contrato */
-    function PokeCentral(address account1Demo, address account2Demo) {
+    //function PokeCentral(address account1Demo, address account2Demo) {
+    function PokeCentral() {    
         owner = msg.sender;
         
-        newPokemonMaster(owner);                            // Todos pokemons serao criados para este owner
+        //newPokemonMaster(owner);                            // Todos pokemons serao criados para este owner
         
         /* 
         Há um problema com um array de indices, pois quando um item é excluído, é substituído por 0. 
         Então vamos criar um pokemon fake no primeiro item e ajustar a quantidade para ignorá-lo
         */
-        newPokemon(0,0,0);                                  // Pokemon Índice 0
-        totalPokemonSupply-=1;                              // Ajusta o total de pokemons porque o primeiro é fake
+        //newPokemon(0,0,0);                                  // Pokemon Índice 0
+        //totalPokemonSupply-=1;                              // Ajusta o total de pokemons porque o primeiro é fake
         
         /* Criacao de pokemons iniciais */
-        newPokemon(3,500,40);
-        newPokemon(1,535,70);
-        newPokemon(4,546,80);
-        newPokemon(2,557,90);
+        //newPokemon(3,500,40);
+        //newPokemon(1,535,70);
+        //newPokemon(4,546,80);
+        //newPokemon(2,557,90);
         
         /* Se as contas demo forem apresentadas no carregamento, então os pokemons criados serão distribuidos entre elas */
-        if (account1Demo != 0 && account2Demo != 0){
+        /*if (account1Demo != 0 && account2Demo != 0){
             transferPokemon(msg.sender, account1Demo, 1);
             transferPokemon(msg.sender, account1Demo, 4);
             transferPokemon(msg.sender, account2Demo, 2);
             transferPokemon(msg.sender, account2Demo, 3);
-        }
+        }*/
     }
     
     /* Criar novo Pokemon */
-    function newPokemon(uint pokemonNumber, uint cp, uint hp ) onlyOwner returns (bool success) { // cp e hp podem ser fornecidos randomicamente por https://api.random.org/json-rpc/1/basic
+    function newPokemon(uint pokemonNumber, uint cp, uint hp )  returns (bool success) { // cp e hp podem ser fornecidos randomicamente por https://api.random.org/json-rpc/1/basic
         uint pokemonID = pokemons.length++;
         Pokemon p = pokemons[pokemonID];
         p.pokeNumber = pokemonNumber;
@@ -121,18 +126,23 @@ contract PokeCentral is accessControlled {
         p.pokeCP = cp;
         p.pokeHP = hp;
         
-        p.pokemonHash = sha3(p.pokeNumber,p.pokeName,p.pokeType,p.pokeCP,p.pokeHP); // Hash de verificacao das infos do pokémon
+        //p.pokemonHash = sha3(p.pokeNumber,p.pokeName,p.pokeType,p.pokeCP,p.pokeHP); // Hash de verificacao das infos do pokémon
         p.pokeOwner = owner;
         pokemonToMaster[pokemonID] = owner;
-        addPokemonToMaster(owner, pokemonID);
+        //addPokemonToMaster(owner, pokemonID);
+        
+        /*uint[] tempList = balanceOf[owner];
+        tempList[tempList.length++] = pokemonID;
+        balanceOf[owner] = cleanArray(tempList);
+        qtdePokemons(owner);*/
         
         totalPokemonSupply += 1;
-        CreatePokemon(pokemonID, p.pokeName, p.pokeCP, p.pokeHP);
+        //CreatePokemon(pokemonID, p.pokeName, p.pokeCP, p.pokeHP);
         return true;
     }
 
     /* Alterar CP e HP de um Pokemon */
-    function updatePokemon(uint _pokemonID, uint _cp, uint _hp ) onlyOwner returns (bool success) {
+    /*function updatePokemon(uint _pokemonID, uint _cp, uint _hp )  returns (bool success) {
         Pokemon p = pokemons[_pokemonID];
         p.pokeCP = _cp;
         p.pokeHP = _hp;
@@ -142,10 +152,10 @@ contract PokeCentral is accessControlled {
         UpdatePokemon(_pokemonID, p.pokeName, p.pokeCP, p.pokeHP);
         return true;
         
-    }    
+    } */   
     
     /* Criar novo Mestre Pokemon */
-    function newPokemonMaster(address pokemonMaster) onlyOwner returns (bool success) {
+    function newPokemonMaster(address pokemonMaster)  returns (bool success) {
         uint ownerID = pokeMasters.length++;
         PokemonMaster o = pokeMasters[ownerID];
         o.pokeMaster = pokemonMaster;
@@ -162,14 +172,36 @@ contract PokeCentral is accessControlled {
         if (pokeOwnerIndex[_to] == 0 && _to != pokemonToMaster[0] ) newPokemonMaster(_to);
         p.pokeOwner = _to;
         pokemonToMaster[_pokemonID] = _to;
-        delPokemonFromMaster(_from, _pokemonID);
-        addPokemonToMaster(_to, _pokemonID);
-        Transfer(_from, _to, _pokemonID);
+        //delPokemonFromMaster(_from, _pokemonID);
+        uint[] tempList = balanceOf[_from];
+        for (uint i=0; i < tempList.length; i++){
+            if (tempList[i] == _pokemonID){
+                delete tempList[i];
+            }
+        }
+        balanceOf[_from] = cleanArray(tempList);
+        qtdePokemons(_from);
+        //addPokemonToMaster(_to, _pokemonID);
+        tempList = balanceOf[_to];
+        tempList[tempList.length++] = _pokemonID;
+        balanceOf[_to] = cleanArray(tempList);
+        qtdePokemons(_to);
+        //Transfer(_from, _to, _pokemonID);
         return (_pokemonID, _from, _to);
     }
     
     /* Vincula um pokemon ao seu treinador */
     function addPokemonToMaster(address _pokemonOwner, uint256 _pokemonID) internal returns (address pokeOwner, uint[] pokemons, uint pokemonsTotal) {
+        if (msg.sender != owner && msg.sender != pokeMarketAddress) throw;
+        //uint ownerID = pokeOwnerIndex[_pokemonOwner];
+        uint[] tempList = balanceOf[_pokemonOwner];
+        tempList[tempList.length++] = _pokemonID;
+        balanceOf[_pokemonOwner] = cleanArray(tempList);
+        qtdePokemons(_pokemonOwner);
+        return (_pokemonOwner, tempList, tempList.length);
+        
+    }    
+    /*function addPokemonToMaster(address _pokemonOwner, uint256 _pokemonID) internal returns (address pokeOwner, uint[] pokemons, uint pokemonsTotal) {
         if (msg.sender != owner && msg.sender != pokeMarketAddress) throw;
 
         uint ownerID = pokeOwnerIndex[_pokemonOwner];
@@ -188,7 +220,7 @@ contract PokeCentral is accessControlled {
         array[] = [ 1, 2, 0, 4 ]
         */
 
-        bool slot;
+        /*bool slot;
         for (uint i=0; i < pokeList.length; i++){
             if (pokeList[i] == 0){
                 slot = true;
@@ -201,15 +233,28 @@ contract PokeCentral is accessControlled {
             uint j = pokeList.length++;
             o.pokemons[j] = _pokemonID;
         }    
-        balanceOf[_pokemonOwner] = cleanArray(o.pokemons);
+        balanceOf[_pokemonOwner] = o.pokemons;
         
         qtdePokemons(_pokemonOwner);
-        UpdateMasterPokemons(_pokemonOwner, o.pokemons.length);
+        //UpdateMasterPokemons(_pokemonOwner, o.pokemons.length);
         return (_pokemonOwner, o.pokemons, o.pokemons.length);
-    }
+    }*/
     
     /* Desvincula um pokemon do seu treinador */
     function delPokemonFromMaster(address _pokemonOwner, uint256 _pokemonID) internal  returns (address pokeOwner, uint[] pokemons, uint pokemonsTotal) {
+        if (msg.sender != owner && msg.sender != pokeMarketAddress) throw;
+        uint[] tempList = balanceOf[_pokemonOwner];
+        for (uint i=0; i < tempList.length; i++){
+            if (tempList[i] == _pokemonID){
+                delete tempList[i];
+            }
+        }
+        balanceOf[_pokemonOwner] = cleanArray(tempList);
+        qtdePokemons(_pokemonOwner);
+        return (_pokemonOwner, tempList, tempList.length);
+        
+    }    
+    /*function delPokemonFromMaster(address _pokemonOwner, uint256 _pokemonID) internal  returns (address pokeOwner, uint[] pokemons, uint pokemonsTotal) {
         if (msg.sender != owner && msg.sender != pokeMarketAddress) throw;
  
         uint ownerID = pokeOwnerIndex[_pokemonOwner];
@@ -223,26 +268,26 @@ contract PokeCentral is accessControlled {
         }
         
         // http://ethereum.stackexchange.com/questions/3373/how-to-clear-large-arrays-without-blowing-the-gas-limit
-        o.pokemons=cleanArray(pokeList); // Rearranja o array, eliminando os itens zerados, a custo de gas
+        o.pokemons=pokeList; // Rearranja o array, eliminando os itens zerados, a custo de gas
         
-        balanceOf[_pokemonOwner] = cleanArray(o.pokemons);
+        balanceOf[_pokemonOwner] = o.pokemons;
         
         qtdePokemons(_pokemonOwner);
-        UpdateMasterPokemons(_pokemonOwner, o.pokemons.length);
+        //UpdateMasterPokemons(_pokemonOwner, o.pokemons.length);
         return (_pokemonOwner, o.pokemons, o.pokemons.length);
-    }
+    }*/
     
     /* Funcao ilustrativa: lista pokemons de um treinador pois o browser solidity não mostra o conteúdo dos arrays no struct e no mapping */
-    function listPokemons( address _pokeOwner )  returns (address, uint[]){
+    /*function listPokemons( address _pokeOwner )  returns (address, uint[]){
         uint ownerID = pokeOwnerIndex[_pokeOwner];
-        PokemonMaster o = pokeMasters[ownerID];
+        PokemonMaster o = pokeMasters[ownerID];*/
         
         /* Lista pokemons tanto do struct quanto do mapping. */
-        return ( _pokeOwner, balanceOf[_pokeOwner] );
-    }
+        /*return ( _pokeOwner, balanceOf[_pokeOwner] );
+    }*/
     
     /* Conta a qtde de pokemons em um array que possui zeros */
-    function qtdePokemons( address _pokeOwner) internal returns (uint qtde){
+    /*function qtdePokemons(address _pokeOwner) internal returns (uint qtde){
         if (msg.sender != owner && msg.sender != pokeMarketAddress) throw;
 
         uint ownerID = pokeOwnerIndex[_pokeOwner];
@@ -256,10 +301,11 @@ contract PokeCentral is accessControlled {
         }
         totalPokemonsFromMaster[_pokeOwner] = count;
         return count;
-    }
+    }*/
     
     /* Exemplo 2: Conta a qtde de pokemons diretamente do mapping */
-    function qtdePokemonsMapping( address _pokeOwner) internal returns (uint qtde){
+    //function qtdePokemonsMapping( address _pokeOwner) internal returns (uint qtde){
+    function qtdePokemons( address _pokeOwner) internal returns (uint qtde){
         uint[] tempList = balanceOf[_pokeOwner];
         totalPokemonsFromMaster[_pokeOwner] = tempList.length;
         return tempList.length;
@@ -279,6 +325,10 @@ contract PokeCentral is accessControlled {
         uint[] memory tempArray2 = new uint[](j);
         for (i=0; i< j; i++) tempArray2[i] = tempArray[i];
         return tempArray2;
+    }
+    
+    function updatePokeMarketAddress(address marketAddress) {
+        pokeMarketAddress = marketAddress;
     }
 
     /* Se tentarem enviar ether para o end desse contrato, ele rejeita */

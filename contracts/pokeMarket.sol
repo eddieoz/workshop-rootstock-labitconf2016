@@ -34,7 +34,7 @@ contract accessControlled {
     modifier onlyOwner {
         if (msg.sender != owner) throw;
         /* o caracter "_" é substituído pelo corpo da funcao onde o modifier é utilizado */
-        _
+        _;
     }
     
     function transferOwnership(address newOwner) onlyOwner {
