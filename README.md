@@ -82,13 +82,13 @@ Também é apresentado o conceito de um ambiente sem infraestrutura, que usa o b
 # pokemarket.totalActiveSales();
 
 16. Verifique os dados da venda 1:
-# pokemarket.pokeSales(1);
+# pokemarket.pokeSales(0);
 
 17. Verifique se o pokemon está com venda ativa diretamente:
 # pokemarket.pokeSelling(1);
 
 18. Compre o pokemon 1 à venda, com o player 2
-# pokemarket.buyPokemon(account2Demo, 1, {from:web3.eth.accounts[0],gas:2000000})
+# pokemarket.buyPokemon(account2Demo, 1, {from:web3.eth.accounts[0],gas:2000000});
 
 19. Verifique que o owner do pokemon foi alterado para o endereço do account2Demo
 # pokecentral.pokemons(1);

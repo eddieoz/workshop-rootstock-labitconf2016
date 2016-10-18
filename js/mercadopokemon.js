@@ -34,9 +34,9 @@ var abiPokeCentral = [{"constant":true,"inputs":[{"name":"","type":"address"},{"
 var abiPokeMarket = [{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"pokeSales","outputs":[{"name":"pokeSeller","type":"address"},{"name":"pokeBuyer","type":"address"},{"name":"pokeID","type":"uint256"},{"name":"pokePrice","type":"uint256"},{"name":"pokeSold","type":"bool"},{"name":"pokeSellActive","type":"bool"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"newPokecoinAddress","type":"address"},{"name":"newPokecentralAddress","type":"address"}],"name":"updatePokecoinAndPokemarketAddresses","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"pokeSaleIndex","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"pokeSelling","outputs":[{"name":"","type":"bool"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"pokeSellerAddress","type":"address"},{"name":"pokemonID","type":"uint256"},{"name":"pokemonSalePrice","type":"uint256"}],"name":"newSale","outputs":[{"name":"success","type":"bool"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"totalPokemonSales","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"pokeCoin","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"pokeSellerAddress","type":"address"},{"name":"pokemonID","type":"uint256"}],"name":"stopSale","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"pokeCentral","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"pokeBuyerAddress","type":"address"},{"name":"pokemonID","type":"uint256"}],"name":"buyPokemon","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"totalActiveSales","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":false,"inputs":[],"name":"owned","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"},{"name":"","type":"uint256"}],"name":"pokeMasterSelling","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"payable":false,"type":"function"},{"inputs":[{"name":"pokeCoinAddress","type":"address"},{"name":"pokeCentralAddress","type":"address"}],"type":"constructor"},{"payable":false,"type":"fallback"},{"anonymous":false,"inputs":[{"indexed":false,"name":"pokeSellerAddress","type":"address"},{"indexed":false,"name":"pokemonID","type":"uint256"},{"indexed":false,"name":"pokemonSalePrice","type":"uint256"}],"name":"NewSale","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"pokeSellerAddress","type":"address"},{"indexed":false,"name":"pokemonID","type":"uint256"}],"name":"StopSale","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"pokeBuyerAddress","type":"address"},{"indexed":false,"name":"pokeSellerAddress","type":"address"},{"indexed":false,"name":"pokemonID","type":"uint256"}],"name":"PokeTrade","type":"event"}];
 
 /* Endereços dos Dapps */
-var pokeCoinAddress = '0x72b39796412e178f45809307f3b31b10c1ee4593';
-var pokeCentralAddress = '0x47675844e24e1eb402e065cdbad5a91faefa4956';
-var pokeMarketAddress = '0x6f0d61ac8f7d9088f00d03770b828fdaaa00cc14';
+var pokeCoinAddress = '0xc5ff80517e12a9dd9e249e0be5f5aa8adffb229a';
+var pokeCentralAddress = '0x001306f6a9689a6701f6cbecc2ee5cab50ff6c42';
+var pokeMarketAddress = '0x64ab6928cb89f0df40b42cb412a92ef77d10b7ac';
 
 /* Carregamento dos Contratos */
 var MyPokeCoinContract = web3.eth.contract(abiPokeCoin);
@@ -87,14 +87,16 @@ lightwallet.keystore.deriveKeyFromPassword(password, function(err, pwDerivedKey)
 
 function showStatus(){
 	var currentBalance = pokeCoin.balanceOf('0x'+accountAddress).toNumber();
+	console.log(currentBalance);
 	var qtdePokemons = pokeCentral.totalPokemonsFromMaster('0x'+accountAddress);
+	console.log(qtdePokemons);
 	document.getElementById("currbalance").innerText = 'Balance: ' + currentBalance + ' pkc'; 
 	document.getElementById("totalPokemons").innerText = 'Qtde : ' + qtdePokemons + ' pokemon(s)'; 			
 	
 	
 	/* Constrói informações sobre cada Pokémon da conta */
 	var html = '<table class="table table-striped">';
-	html += '<thead><tr><th>ID</th><th>Pokemon</th><th>Tipo</th><th>CP</CP><th>HP</th></tr></thead><tbody>'
+	html += '<thead><tr><th>ID</th><th>Pokemon</th><th>Type</th><th>CP</CP><th>HP</th></tr></thead><tbody>'
 	for (i=0; i<qtdePokemons; i++){
 		html += '<tr>'
 		var pokeID = pokeCentral.balanceOf('0x'+accountAddress, i);
@@ -111,8 +113,8 @@ function showStatus(){
 	/* Constrói as vendas ativas */
 	var html2 = '';
 	html2 = '<table class="table table-striped">'
-	html2 += '<thead><tr><th>ID</th><th>Pokemon</th><th>Tipo</th><th>CP</CP><th>HP</th><th>Valor</th><th>Dono</th><th>#</th></tr></thead><tbody>';
-	for (i=0;;i++){
+	html2 += '<thead><tr><th>ID</th><th>Pokemon</th><th>Type</th><th>CP</CP><th>HP</th><th>Price</th><th>Owner</th><th>#</th></tr></thead><tbody>';
+	for (i=0;i<5;i++){
 		if (pokeMarket.pokeSales(i)[0] == '0x') break;
 		if (pokeMarket.pokeSales(i)[5]){ 
 			html2 += '<tr>';
@@ -126,7 +128,7 @@ function showStatus(){
 			if (pokeMarket.pokeSales(i)[0] == '0x'+accountAddress){
 				html2 += '<td><button type="button" class="btn btn-xs btn-info" onclick="stopSell(' + saleID + ')">Cancel</button></td>';
 			} else {
-				html2 += '<td><button type="button" class="btn btn-xs btn-success" onclick="setBuy(' + saleID + ')">Comprar</button></td>';
+				html2 += '<td><button type="button" class="btn btn-xs btn-success" onclick="setBuy(' + saleID + ')">Buy</button></td>';
 			}
 			html2 += '</tr>';
 		}		
@@ -138,12 +140,12 @@ function showStatus(){
 function setSell(){
 	var pokeIDSell = document.getElementById("pokeIDSell").value;
 	var pokePriceSell = document.getElementById("pokePriceSell").value;
-	pokeMarket.newSale('0x'+accountAddress, pokeIDSell, pokePriceSell, {value: 0, gas: 290654, gasPrice: 20000000000}, function(err, hash) {
+	pokeMarket.newSale('0x'+accountAddress, pokeIDSell, pokePriceSell, {value: 0, gas: 2000000}, function(err, hash) {
 		if (!err){
-			console.log("Transacao enviada: " + hash);
+			console.log("Transaction sent: " + hash);
 			document.getElementById("msgVenda").innerText = hash;
 		} else {
-			console.log("Erro no envio: " + err);
+			console.log("Error: " + err);
 			document.getElementById("msgVenda").innerText = err;
 		};
 	});
@@ -153,12 +155,12 @@ function setSell(){
 
 function setBuy(pokemonID){
 	var pokeIDBuy = pokemonID;
-	pokeMarket.buyPokemon('0x'+accountAddress, pokeIDBuy, {value: 0, gas: 428638, gasPrice: 20000000000}, function(err, hash) {
+	pokeMarket.buyPokemon('0x'+accountAddress, pokeIDBuy, {value: 0, gas: 2000000}, function(err, hash) {
 		if (!err){
-			console.log("Transacao enviada: " + hash);
+			console.log("Transaction sent: " + hash);
 			document.getElementById("msgMercado").innerText = hash;
 		} else {
-			console.log("Erro no envio: " + err);
+			console.log("Error: " + err);
 			document.getElementById("msgMercado").innerText = err;
 		};
 	});
@@ -166,12 +168,12 @@ function setBuy(pokemonID){
 }
 
 function stopSell(pokemonID){
-	pokeMarket.stopSale('0x'+accountAddress, pokemonID, {value: 0, gas: 428638, gasPrice: 20000000000}, function(err, hash) {
+	pokeMarket.stopSale('0x'+accountAddress, pokemonID, {value: 0, gas: 2000000}, function(err, hash) {
 		if (!err){
-			console.log("Transacao enviada: " + hash);
+			console.log("Transaction sent: " + hash);
 			document.getElementById("msgMercado").innerText = hash;
 		} else {
-			console.log("Erro no envio: " + err);
+			console.log("Error: " + err);
 			document.getElementById("msgMercado").innerText = err;
 		};
 	});

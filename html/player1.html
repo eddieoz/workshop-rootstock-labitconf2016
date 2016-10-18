@@ -15,6 +15,7 @@
 		<link href="css/bootstrap.min.css" rel="stylesheet">
 		<link href="css/jumbotron-narrow.css" rel="stylesheet">
 
+		<script type="text/javascript" src="../js/jquery-2.1.4.js"></script>
 		<script type="text/javascript" src="../js/web3.js"></script>
 		<script type="text/javascript" src="../js/lightwallet.js"></script>
 		<script type="text/javascript" src="../js/hooked-web3-provider.js"></script>
@@ -35,7 +36,7 @@
 			<div class="header clearfix">
 				<nav>
 				  <ul class="nav nav-pills pull-right">
-				    <li role="presentation" class="active" onclick="showStatus()"><a href="#">Atualizar</a></li>
+				    <li role="presentation" class="active" onclick="showStatus()"><a href="#">Update</a></li>
 				  </ul>
 				</nav>
 				<img src="imgs/pokemon-go.jpg" width="20%">
@@ -43,7 +44,7 @@
 			</div>
 			<div class="jumbotron">
 				<h1>Mercado Pokémon</h1>
-				<p class="lead">Workshop para desenvolvedores apresentando smart-contracts na plataforma Ethereum
+				<p class="lead">Workshop for developers: presenting RSK smart-contracts
 			</div>
 
 			<div class="row marketing">
@@ -65,23 +66,23 @@
 				
 
 				<div class="col-lg-6">
-					<h4>Vender Pokémon</h4>
+					<h4>Sell Pokémon</h4>
 					<div class="row">
 					    <div class="form-group col-xs-6 col-md-4" >
 							<label for="pokeIDSell">ID:</label>
 							<input type="number" class="form-control input-small" id="pokeIDSell">
 						</div>
 						<div class="form-group col-xs-6 col-md-4">
-							<label for="pokePriceSell">Preço:</label>
+							<label for="pokePriceSell">Price:</label>
 							<input type="number" class="form-control input-small" id="pokePriceSell">
 						</div>
 					</div>
-					<button type="submit" class="btn btn-success" onclick="setSell()">Vender</button>
+					<button type="submit" class="btn btn-success" onclick="setSell()">Sell</button>
 					<div id='msgVenda'></div>
 				
 					<hr />
 
-					<h4>Mercado Ativo</h4>
+					<h4>Active Market (Pokémon Order Book)</h4>
 					<div id="pokeSells"></div>
 					<div id='msgMercado'></div>
 				</div>
