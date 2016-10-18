@@ -18,7 +18,7 @@ Also is presented the concept of a non-infrastructure environment, which uses bl
 
 ## Setup:
 
-0. node console -server 40.76.76.239:4445
+0. node console -server [node address]:4445
 
 1. Open file accounts-for-testing.txt
 
