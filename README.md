@@ -1,118 +1,115 @@
-# workshop-1hackathon-BC-2016
+# workshop-rootstock-LaBitConf2016
 # Mercado Pokémon
 
-Material didático para o Workshop no 1 Hackathon BC - 7-Set-2016
+Teaching material for LaBitConf 2016 RSK Workshop
 
-O conteúdo apresentado deve ser utilizado somente para fins didáticos. 
-Este é um protótipo para estudo e aprendizado sobre o desenvolvimento de smart-contracts na plataforma Ethereum e não deve ser utilizado em produção.
+The featured content must be used only for educational purposes.
+This is a prototype for studying and learning about the development of RSK Dapps (decentralized applications) and should not be used in production.
 
-## O que é o Mercado Pokémon
-Mercado Pokémon é uma demonstração do funcionamento de criação de moedas e Pokémons na plataforma Ethereum, assim como a negociação dos mesmos entre contas distintas.
+## What is the Mercado Pokémon?
+Mercado Pokémon is a demo of creating coins and Pokémons in RSK platform, as well as the trading between different accounts.
 
-Também é apresentado o conceito de um ambiente sem infraestrutura, que usa o blockchain como repositório de dados e aplicações, acessado diretamente por um html standalone.
+Also is presented the concept of a non-infrastructure environment, which uses blockchain as a data repository and acessing dapps directly by a standalone html.
 
-## Pré-requisitos:
-- Ethereum em Testnet
-- Mist
+## Pre-requisites:
+- RSK node
+- RSK console (connecting to the node)
+- Solidity Browser
 
 ## Setup:
 
 0. node console -server 40.76.76.239:4445
 
-1. Abra o arquivo accounts-for-testing.txt
+1. Open file accounts-for-testing.txt
 
-2. Abra o arquivo pokecoin.web3.js e carregue no console.
+2. Open file pokecoin.web3.js and copy the contents to the console
 
-3. Anote o endereço de pokecoin.address em accounts-for-testing.txt
+3. Note the address pokecoin.address in accounts-for-testing.txt
 
-4. Transfira pokecoins para os players no console:
+4. Transfer pokecoins to the players 1 and 2 using the console:
 # pokecoin.transfer(account1Demo, 5000, {from:web3.eth.accounts[0],gas:2000000});
 # pokecoin.transfer(account2Demo, 5000, {from:web3.eth.accounts[0],gas:2000000});
-4.1 Verifique se a transferencia teve sucesso
+4.1 Verify is the transfers were suceeded
 # pokecoin.balanceOf(account1Demo) // 5000
 # pokecoin.balanceOf(account2Demo) // 5000
 
-5. Abra o arquivo pokecentral.web3.js e carregue no console
+5. Open file pokecentral.web3.js and copy the contents to the console
 
-6. Anote o endereço de pokecentral.address em accounts-for-testing.txt
+6.  Note the address pokecentral.address in accounts-for-testing.txt
 
-7. No console, crie o primeiro owner de pokemons:
+7. Inside console, create the first pokemon owner:
 
 # pokecentral.newPokemonMaster(web3.eth.accounts[0], {from:web3.eth.accounts[0],gas:2000000});
 
-8. No console, crie o primeiro pokemon 0,0,0
+8. Inside console, create the first pokemon (0,0,0 this is a not valid pokemon)
 # pokecentral.newPokemon(0,0,0, {from:web3.eth.accounts[0],gas:2000000})
 
-9. Crie os primeiros pokemons validos
+9. Create the next four valid pokemons:
 # pokecentral.newPokemon(3,500,40, {from:web3.eth.accounts[0],gas:2000000});
 # pokecentral.newPokemon(1,535,70, {from:web3.eth.accounts[0],gas:2000000});
 # pokecentral.newPokemon(4,546,80, {from:web3.eth.accounts[0],gas:2000000});
 # pokecentral.newPokemon(2,557,90, {from:web3.eth.accounts[0],gas:2000000});
-9.1 Verifique o total de pokemons
+9.1 Verify pokemon total
 # pokecentral.totalPokemonSupply()
-9.2 Verifique os pokemons do owner (aguarde a criacao)
+9.2 Verify the pokemon owner (wait until mining)
 # pokecentral.pokemons(0);
 # pokecentral.pokemons(1);
 # pokecentral.pokemons(2);
 # pokecentral.pokemons(3);
 # pokecentral.pokemons(4);
 
-10. Transfira os pokemons criados para player1 e player2
+10. Transfer the pokemons to player1 and player2
 # pokecentral.transferPokemon(web3.eth.accounts[0], account1Demo, 1,{from:web3.eth.accounts[0],gas:2000000});
 # pokecentral.transferPokemon(web3.eth.accounts[0], account1Demo, 4,{from:web3.eth.accounts[0],gas:2000000});
 # pokecentral.transferPokemon(web3.eth.accounts[0], account2Demo, 2,{from:web3.eth.accounts[0],gas:2000000});
 # pokecentral.transferPokemon(web3.eth.accounts[0], account2Demo, 3,{from:web3.eth.accounts[0],gas:2000000});
-10.1 Verifique os pokemons de cada owner como no item 9.1
+10.1 Verify the pokemon owner, as in 9.1
 
-11. Abra o arquivo pokeMarket.web3.js, adicione os endereços da pokecoin e pokecentral e carregue no console
+11. Open file pokeMarket.web3.js, add the addresses pokecoin e pokecentral and load it into the console
 
-12. Anote o endereço de pokemarket.address em accounts-for-testing.txt
+12. Note the address of pokemarket.address in accounts-for-testing.txt
 
-13. Atualize o PokeMarketAddress nos contratos PokeCoin e PokeCentral
+13. Update the PokeMarketAddress in dapps PokeCoin e PokeCentral
 # pokecoin.updatePokeMarketAddress(pokemarket.address, {from:web3.eth.accounts[0],gas:2000000});
 # pokecentral.updatePokeMarketAddress(pokemarket.address, {from:web3.eth.accounts[0],gas:2000000});
-13.1 Verifique os endereços
+13.1 Verify the addresses
 # pokecoin.pokeMarketAddress();
 # pokecentral.pokeMarketAddress();
 
-14. Coloque o pokemon 1 do account1Demo à venda por 2000 pkc:
+14. Put the pokemon 1 from account1Demo for selling by 2000 pkc:
 # pokemarket.newSale(account1Demo, 1, 2000, {from:web3.eth.accounts[0],gas:2000000});
 
-15. Verifique o número de vendas ativas:
+15. Verify the number of active sells:
 # pokemarket.totalActiveSales();
 
-16. Verifique os dados da venda 1:
+16. Verify the active sell 1 data:
 # pokemarket.pokeSales(0);
 
-17. Verifique se o pokemon está com venda ativa diretamente:
+17. Verify if the pokemon 1 is active for selling:
 # pokemarket.pokeSelling(1);
 
-18. Compre o pokemon 1 à venda, com o player 2
+18. Buy the pokemon 1, with the player 2
 # pokemarket.buyPokemon(account2Demo, 1, {from:web3.eth.accounts[0],gas:2000000});
 
-19. Verifique que o owner do pokemon foi alterado para o endereço do account2Demo
+19. Verify if the pokemon owner was changed to account2Demo address
 # pokecentral.pokemons(1);
 
-20. Verifique a quantidade de pokecoins de cada player
+20. Verify the pokecoins total for each player
 # pokecoin.balanceOf(account1Demo);
 # pokecoin.balanceOf(account2Demo);
 
-21. Atualize as variáveis PokeCoinAddress, PokeCentralAddress e PokeMarketAddress em mercadopokemon.js
+21. Update vars PokeCoinAddress, PokeCentralAddress and PokeMarketAddress in mercadopokemon.js
 
-22. Carregue player1.html e player2.html em janelas separadas no Chrome1
-
-
+22. Load player1.html and player2.html each one in a new window in Chrome
 
 
+## How it works: 
 
 
-## Funcionamento: 
+Once the contracts were loaded, we created the PokeCoins and Pokemons, and distributed them between Player1 and Player2 accounts.
+Through the html files you can put Pokemons for sale and make the purchase.
 
-Assim que os contratos forem carregados, eles criarão as PokeCoins e Pokemons, e os distribuirão entre as contas Player1 e Player2.
-Através dos arquivos html é possível colocar pokemons à venda e efetuar a compra.
+## Obs:
+It is necessary that the account [0] is unlocked and has funds. To do this, type: personal.unlockAccount(eth.accounts[0]) on the console.
 
-## Observação:
-É necessário que o account[0] esteja desbloqueado e possua fundos. Para isso, digite: personal.unlockAccount(eth.accounts[0]) no console.
-
-Se as pokecoins forem transferidas para uma conta no Mist, é possível negociá-las no mercado secundário, desde que a wallet possua fundos em ether para pagar o gas da transação.
-
+If pokecoins are transferred to an account, you can trade them directly in the secondary market, but that wallet must have funds for paying the rsk gas transaction.
