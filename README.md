@@ -82,7 +82,7 @@ Also is presented the concept of a non-infrastructure environment, which uses bl
     pokecentral.transferPokemon(web3.eth.accounts[0], account2Demo, 3,{from:web3.eth.accounts[0],gas:2000000});
     ```    
     
-    11.1 Verify the pokemon owner, as in 9.1
+    11.1 Verify the pokemon owner, as in 10.2
 
 12. Open file pokeMarket.web3.js, add the addresses pokecoin e pokecentral and load it into the console
 
@@ -142,7 +142,6 @@ Also is presented the concept of a non-infrastructure environment, which uses bl
 
 
 ## How it works: 
-
 
 Once the contracts were loaded, we created the PokeCoins and Pokemons, and distributed them between Player1 and Player2 accounts.
 Through the html files you can put Pokemons for sale and make the purchase.
