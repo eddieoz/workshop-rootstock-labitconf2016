@@ -27,28 +27,27 @@ Also is presented the concept of a non-infrastructure environment, which uses bl
 3. Note the address pokecoin.address in accounts-for-testing.txt
 
 4. Transfer pokecoins to the players 1 and 2 using the console:
-```
-pokecoin.transfer(account1Demo, 5000, {from:web3.eth.accounts[0],gas:2000000});
-pokecoin.transfer(account2Demo, 5000, {from:web3.eth.accounts[0],gas:2000000});
-```
-  * Verify is the transfers were suceeded
-```
-pokecoin.balanceOf(account1Demo) // 5000
-pokecoin.balanceOf(account2Demo) // 5000
-```
+    ```
+    pokecoin.transfer(account1Demo, 5000, {from:web3.eth.accounts[0],gas:2000000});
+    pokecoin.transfer(account2Demo, 5000, {from:web3.eth.accounts[0],gas:2000000});
+    ```
+    * Verify is the transfers were suceeded
+    ```
+    pokecoin.balanceOf(account1Demo) // 5000
+    pokecoin.balanceOf(account2Demo) // 5000
+    ```
 5. Open file pokecentral.web3.js and copy the contents to the console
 
 6.  Note the address pokecentral.address in accounts-for-testing.txt
 
 7. Inside console, create the first pokemon owner:
-```
-pokecentral.newPokemonMaster(web3.eth.accounts[0], {from:web3.eth.accounts[0],gas:2000000});
-```
+    ```
+    pokecentral.newPokemonMaster(web3.eth.accounts[0], {from:web3.eth.accounts[0],gas:2000000});
+    ```
 8. Inside console, create the first pokemon (0,0,0 this is a not valid pokemon)
-```
-pokecentral.newPokemon(0,0,0, {from:web3.eth.accounts[0],gas:2000000})
-```
-
+    ```
+    pokecentral.newPokemon(0,0,0, {from:web3.eth.accounts[0],gas:2000000})
+    ```
 9. Create the next four valid pokemons:
 ```
 pokecentral.newPokemon(3,500,40, {from:web3.eth.accounts[0],gas:2000000});
