@@ -31,7 +31,7 @@ Also is presented the concept of a non-infrastructure environment, which uses bl
 pokecoin.transfer(account1Demo, 5000, {from:web3.eth.accounts[0],gas:2000000});
 pokecoin.transfer(account2Demo, 5000, {from:web3.eth.accounts[0],gas:2000000});
 ```
-4.1 Verify is the transfers were suceeded
+  4.1 Verify is the transfers were suceeded
 ```
 pokecoin.balanceOf(account1Demo) // 5000
 pokecoin.balanceOf(account2Demo) // 5000
@@ -56,11 +56,11 @@ pokecentral.newPokemon(1,535,70, {from:web3.eth.accounts[0],gas:2000000});
 pokecentral.newPokemon(4,546,80, {from:web3.eth.accounts[0],gas:2000000});
 pokecentral.newPokemon(2,557,90, {from:web3.eth.accounts[0],gas:2000000});
 ```    
-9.1 Verify pokemon total
+  9.1 Verify pokemon total
 ```
 pokecentral.totalPokemonSupply()
 ```
-9.2 Verify the pokemon owner (wait until mining)
+  9.2 Verify the pokemon owner (wait until mining)
 ```
 pokecentral.pokemons(0);
 pokecentral.pokemons(1);
@@ -75,7 +75,7 @@ pokecentral.transferPokemon(web3.eth.accounts[0], account1Demo, 4,{from:web3.eth
 pokecentral.transferPokemon(web3.eth.accounts[0], account2Demo, 2,{from:web3.eth.accounts[0],gas:2000000});
 pokecentral.transferPokemon(web3.eth.accounts[0], account2Demo, 3,{from:web3.eth.accounts[0],gas:2000000});
 ```    
-10.1 Verify the pokemon owner, as in 9.1
+  10.1 Verify the pokemon owner, as in 9.1
 
 11. Open file pokeMarket.web3.js, add the addresses pokecoin e pokecentral and load it into the console
 
@@ -86,7 +86,7 @@ pokecentral.transferPokemon(web3.eth.accounts[0], account2Demo, 3,{from:web3.eth
 pokecoin.updatePokeMarketAddress(pokemarket.address, {from:web3.eth.accounts[0],gas:2000000});
 pokecentral.updatePokeMarketAddress(pokemarket.address, {from:web3.eth.accounts[0],gas:2000000});
 ```    
-13.1 Verify the addresses
+  13.1 Verify the addresses
 ```
 pokecoin.pokeMarketAddress();
 pokecentral.pokeMarketAddress();
